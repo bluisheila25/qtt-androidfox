@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <script src="js/jquery-1.8.2.min.js"></script>
+<link rel="stylesheet" href="css/qtt.css" />
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+    <script src="js/jquery.mobile-1.3.2.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+
+	<script src="js/index.js"></script>
+	<script src="js/date.js"></script>
+	<script language="javascript" type="text/javascript" src="js/jquery.jqplot.min.js"></script>	
+	<script type="text/javascript" src="js/jqplot.pointLabels.min.js"></script>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<style>
+ .nav-search .ui-btn-up-b {
+					background-image:none;
+					background-color:#333333;
+				}
+				.nav-search .ui-btn-inner {
+					border-top: 1px solid #888;
+					border-color: rgba(255, 255, 255, .1);
+				}
+body .ui-body-b, body .ui-overlay-b { text-shadow:0 0 0; }
+
+
+ </style>
+
+		<script type="text/javascript">
+	$.plotdata = {};
+	function setCharAt(str,index,chr) {
+		if(index > str.length-1) return str;
+		return str.substr(0,index) + chr + str.substr(index+1);
+	}
+	
+	  $('#frm_viewgraph').live('pageshow', function() {	
+		$('#frm_viewgraph').page();
+		if(easy.length >= 1 || medium.length >=1 || hard.length >= 1){
+			$.jqplot('chartdiv',  [easy,medium,hard] ,
+			{ 	title:'QTT Typing Progress',
+				axes:{yaxis:{min:0,label:'WPM'},xaxis:{min:0,label:'Tries',tickOptions:{formatString:'%d'},tickInterval:1}},
+				series:[{label:'Beginner'},{label:'Novice'},{label:'Hard'}],
+				seriesColors:['red','green','blue'],
+				legend:{show:true}
+			});		
+		}
+});
+
+
+	</script>
+
+</head>
+<body>
+
+
+<!-- Start of first page -->
+<div data-role="page" data-theme="b" id="frm_main" style="background: #080808">
+
+<div data-role="header" >
+		<center>
+		<p style="font-size:25px">Qwerty Typing Test</p>
+	</center>
+	
+	</div>
+
+	<div data-role="content" >
+			<!-- Volume-->
+			<div data-role="fieldcontain">
+				<label for="flip-off">Sounds</label>
+				<br>
+				<select name="slider" id="flip-on" data-role="slider">
+					<option value="on">On</option>
+					<option value="off">Off</option>
+				</select>
+			</div>
+
+		<img src="images/fin.png"  style="display: block; margin-left:auto;margin-right:auto ; max-width:100%; max-height:auto"/><br>
+	<br>
+
+
+<a href="#frm_difficulty" data-transition="pop"  data-role="button" style="text-align:center" >START TYPING</a>
+<a href="#frm_about" data-transition="pop"  data-role="button" style="text-align:center; " >ABOUT</a>
+<a href="#frm_lastresult" data-transition="pop" data-role="button" onclick = "getLevel()"  style="text-align:center;" >TOP SPEEDS</a>
+<a href="#frm_viewgraph"   data-transition="pop" data-role="button" onclick = "plot()"  style="text-align:center;  " >VIEW PROGRESS</a>
+	<a href="#frm_worldtopscores" data-transition="pop"  data-role="button" style="text-align:center; " >LEADERBOARDS</a>
+	
+	<br>
+	<br>
+	<br>
+	
+	<p>Like QTypingTest on Facebook</p> <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FQTypingTest&amp;width=400&amp;height=21&amp;colorscheme=dark&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:400px; height:21px;" allowTransparency="true"></iframe>
+	
+<p>Follow QTypingTest on Twitter:</p>	<a href="http://twitter.com/QTypingTest" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="large">Follow @QTypingTest</a>
+
+	</div><!-- /content -->
+
+
+</div><!-- /page -->
+
+
+<!-- Start of second page -->
+<div data-role="page"  data-theme="b" id="frm_difficulty" style="background: #080808">
+
+	<div data-role="header">
+	
+		<center>
+		<p style="font-size:25px">Choose Difficulty</p>
+	</center>
+	</div><!-- /header -->
+
+	<div data-role="content">
+
+		<a href="#frm_qtt" data-role="button" onClick="s()" >BEGINNER</a>
+		<a href="#frm_qtt" data-role="button" onClick="m()" >NOVICE</a>
+		<a href="#frm_qtt" data-role="button" onClick="e()" >HARD</a>
+		 <center>
+		<p style="font-size: 1em;" ><strong>Available on FULL VERSION:</strong></p>
+		</center>
+		<a href="#frm_fullver" data-role="button" class="ui-disabled">MASTER</a>
+		<a href="#frm_fullver" data-role="button" class="ui-disabled">SUPER HARD</a>
+		<br>
+		<br>
+		<br>
+
+		<a href="#frm_main" data-role="button" data-inline="true">Back</a>
+
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+<!-- Start of third page -->
+<div data-role="page" data-theme="b" id="frm_about" style="background: #080808">
+
+	<div data-role="header">
+			<center>
+		<p style="font-size:25px">About</p>
+	</center>
+	</div><!-- /header -->
+
+	<div data-role="content">
+
+				<p style="font-size: 1.5em">Ever wondered how fast you can type in the qwerty pad of your smartphone? Worry no further this application is for you. Have fun and improve your typing skills in a smartphone with QTT. Features: FREE Very easy to use. Improves your typing speed. Perfect for competitions and Skill Assessment.</p>
+				
+							<br>
+		<br>
+		<br>
+
+		<a href="#frm_main" data-role="button" data-inline="true">Back</a>
+	</div><!-- /content -->
+
+
+</div><!-- /page -->
+
+<!-- Start of third page -->
+<div data-role="page" data-theme="b" id="frm_viewgraph" style="background: #080808">
+
+	<div data-role="header">
+			<center>
+		<p style="font-size:25px">Progress</p>s
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<div id="chartdiv" style="height:400px;width:450px; "></div>
+	</div><!-- /content -->
+
+
+</div><!-- /page -->
+
+<!-- Start of fourth page -->
+<div data-role="page" data-theme="b" id="frm_worldtopscores" style="background:#080808">
+
+	<div data-role="header">
+	<center>
+		<p style="font-size:25px">World Leaderboard</p>
+	</center>
+	</div><!-- /header -->
+
+	<div data-role="content">
+
+		<img src="images/qtt_topscore.png" style="display: block; margin-left: auto; margin-right: auto;"/>
+				<p>See how fast your QWERTY Typing skills as compared to other people all over the world, try to be the number one. Available in the full version.</p>
+				
+							<br>
+		<br>
+		<br>
+
+		<a href="#frm_main" data-role="button" data-inline="true">Back</a>
+	</div><!-- /content -->
+	
+
+	
+	
+</div><!-- /page -->
+
+<!-- Start of fifth page -->
+<div data-role="page" id="frm_qtt"  data-theme="b" style="background: #080808">
+
+	<div data-role="header">
+		<p  id="txtlevel" style="text-align: center;font-size:25px">LEVEL</p>
+	</div>
+
+	<div data-role="content">
+	<p style="font-size: 1em; text-align: center;"> Click <strong>START</strong> to begin then Press <strong>DONE</strong> when finished typing </p>
+		<form name="theForm">
+		
+		<a href="#typingarea" onClick="beginIt()" name="start" data-role="button" data-inline="true">START</a> 
+			<a href="#" data-role="button"  onClick="stopIt()"  data-inline="true">DONE</a>
+			<textarea name="given" onFocus="cheat()" style="width:100%; height:200px; resize: none;" disabled></textarea>
+		<input type="text" name="typed"  style="width:700px; height:200px"  />
+		</form>
+		
+	</div><!-- /content -->
+
+	
+</div><!-- /page -->
+
+<!-- Start of result page -->
+<div data-role="page"  data-theme="b"  id="frm_result" style="background: #080808">
+
+	<div data-role="header"  >
+		<p id="txtlevel" style="text-align: center; font-size:25px; " >Results</p>
+	</div>
+
+	<div data-role="content">
+					
+		<p style="font-size: 1.5em; text-align: justify;" name="name_result" id="txtresult">result</p>
+		<a href="#frm_difficulty" data-rel="dialog" data-role="button" data-transition="pop" >Try Again</a>
+		<a href="#frm_main" data-role="button" >Main Menu</a>
+		
+		
+	</div><!-- /content -->
+	
+	<div data-role="footer"  data-position="fixed">
+	<div data-role="navbar" >
+				<ul>
+					<li ><a href="#" >Tweet</a></li>
+					<li>	<a href="#"> Share </a></li>
+				</ul>
+			</div>
+</div>
+	
+</div><!-- /page -->
+
+<!-- Start of last  result -->
+<div data-role="page" data-theme="b"  id="frm_lastresult" style="background: #080808">
+
+	<div data-role="header" >
+<center>
+		<p style="font-size:25px" id="textlevel" >Top Speeds</p>
+	</center>
+	</div>
+
+	<div data-role="content">
+	<p id = "easy">
+	</p>
+	<p id = "medium">
+	</p>
+	<p id = "hard">
+	</p>
+	
+			<br>
+		<br>
+		<br>
+
+		<a href="#frm_main" data-role="button" data-inline="true">Back</a>
+	</div><!-- /content -->
+
+
+</div><!-- /page -->
+
+
+</body>
+</html>
